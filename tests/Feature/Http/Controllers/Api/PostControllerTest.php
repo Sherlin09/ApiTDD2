@@ -16,7 +16,7 @@ class PostControllerTest extends TestCase
     public function test_store()
     {
         $user = factory(User::class)->create();
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
         $response = $this->actingAs($user, 'api')->json('POST', '/api/posts', [
             'title' => 'El post de prueba'
         ]);
@@ -27,4 +27,19 @@ class PostControllerTest extends TestCase
 
         $this->assertDatabaseHas('posts', ['title' => 'El post de prueba']);
     }
+
+    public function test_validate_title()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user, 'api')->json('POST', '/api/posts', [
+            'title' => ''
+        ]);
+
+        //Estatus HTT 422
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors('title');
+
+        }
+
 }
