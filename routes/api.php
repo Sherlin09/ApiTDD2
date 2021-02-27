@@ -13,4 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::apiResource('posts','Api\PostController')->middleware('auth:api');
+Route::apiResource('posts','Api\PostController')->middleware('auth:api');//5_10
+                                                //-----------------------
