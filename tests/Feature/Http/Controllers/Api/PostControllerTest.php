@@ -15,9 +15,8 @@ class PostControllerTest extends TestCase
 
     public function test_store()
     {
-        //$this ->withoutExceptionHandling();
         $user = factory(User::class)->create();
-        //$this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
         $response = $this->actingAs($user, 'api')->json('POST', '/api/posts', [
             'title' => 'El post de prueba'
         ]);
