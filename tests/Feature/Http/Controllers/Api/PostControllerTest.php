@@ -85,7 +85,7 @@ class PostControllerTest extends TestCase
         public function test_delete()
     {
         //$this ->withoutExceptionHandling();
-        
+
         $user = factory(User::class)->create();
         $post = factory(Post::class)->create();
 
@@ -97,6 +97,21 @@ class PostControllerTest extends TestCase
                 ->assertStatus(204); //Sin contenido...
 
         $this->assertDatabaseMissing('posts', ['id' => $post->id]);
+    }
+
+    public function test_index()
+    {
+        $user = factory(User::class)->create();
+
+        factory(Post::class, 5)->create();
+
+        $response = $this->actingAs($user, 'api')->json('GET', '/api/posts');
+
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => ['id', 'title', 'created_at', 'updated_at']
+            ]
+            ])-> assertStatus(200);//OK
     }
 
 
