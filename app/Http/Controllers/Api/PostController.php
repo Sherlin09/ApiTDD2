@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json($this->post->paginate());
     }
 
     /**
@@ -75,18 +75,5 @@ class PostController extends Controller
         return response()->json(null, 204);
     }
 
-    public function test_index()
-    {
-        $user = factory(User::class)->create();
-
-        factory(Post::class, 5)->create();
-
-        $response = $this->actingAs($user, 'api')->json('GET', '/api/posts');
-
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => ['id', 'title', 'created_at', 'updated_at']
-            ]
-            ])-> assertStatus(200);//OK
-    }
+    
 }
