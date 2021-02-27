@@ -54,4 +54,14 @@ class PostControllerTest extends TestCase
             ->assertStatus(200); //OK, creado un recurso
         }
 
+        public function test_404_show()
+        {
+
+            $user = factory(User::class)->create();
+
+            $response = $this->actingAs($user, 'api')->json('GET', '/api/posts/1000'); //id = 1
+            
+            $response->assertStatus(404); //OK
+        }
+
 }
